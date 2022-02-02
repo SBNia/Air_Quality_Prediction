@@ -16,15 +16,12 @@ def main():
     df_with_lag.dropna(inplace=True)
 
     if MODE == "TRAIN":
-
         for item in COLUMNS:
             x_train, y_train, x_test, y_test = select_data(df_with_lag, item)
             model = train_model(item, x_train, y_train, x_test, y_test)
             model.save(MODEL_DIR+'lstm_'+item+'_model.h5')
             predict(model, item, x_test, y_test)
     else:
-
-        # Load model from  file
         model = load_model(MODEL_DIR + 'lstm_'+MODEL_NAME+'_model.h5')
 
         x_column, y_column = create_model_data(df_with_lag, MODEL_NAME)
